@@ -1,0 +1,50 @@
+<h1>Contact Page</h1>
+
+<div class="well well-sm my-well">
+  <p>
+    If you have any questions or feedback please leave a message with your email address.
+  </p>
+</div>
+
+<div class="contact-content">
+  <div class="row my-row">
+    <div class="col-md-6">
+
+      {{#unless isShowingConfirmation}}
+        <label>Your email address*:</label>
+
+        <div class="form-group {{if validEmail "has-success"}} has-feedback ">
+          {{input type="email" value=emailAddress class="form-control" placeholder="Please type your e-mail address." autofocus="autofocus"}}
+          {{#if validEmail}}
+            <span class="glyphicon glyphicon-ok form-control-feedback"></span>
+          {{/if}}
+        </div>
+
+        <label>Your message*:</label>
+        <div class="form-group {{if validMessage "has-success"}} has-feedback ">
+          {{textarea value=message rows="6" placeholder="Your message. (At least 5 characters.)" class="form-control ember-text-area ember-view"}}
+
+          {{#if validMessage}}
+            <span class="glyphicon glyphicon-ok form-control-feedback"></span>
+          {{/if}}
+        </div>
+        <button onclick={{action "saveContact"}} class="btn btn-success" disabled="{{if isDisabled "disabled"}}">
+          Send
+        </button>
+      {{else}}
+        <div class="my-alert alert alert-success">
+          <h4>Thank you! Your message is sent.</h4>
+          <p>
+            To: {{emailAddress}}
+          </p>
+          <p>
+            Message: {{message}}
+          </p>
+          <p>
+            Reference Id: {{reference}}
+          </p>
+        </div>
+      {{/unless}}
+    </div>
+  </div>
+</div>
