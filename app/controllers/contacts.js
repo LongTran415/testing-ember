@@ -12,11 +12,21 @@ export default Ember.Controller.extend({
   isValid: Ember.computed.and('validEmail', 'validMessage'),
   isDisabled: Ember.computed.not('isValid'),
   isShowingConfirmation: false,
-  reference: Math.random().toString(36).slice(2),
+
 
   actions: {
     saveContact() {
-      this.set('isShowingConfirmation', true);
+      const email = this.get('emailAddress');
+      const message = this.get('message');
+
+      const newContact = this.store.createRecord('contact', { email: email, message: message });
+
+      newContact.save().then((response) => {
+        const reference = response.get('id');
+        this.set('reference', reference);
+
+        this.set('isShowingConfirmation', true);
+      });
     }
   }
 });
